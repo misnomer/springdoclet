@@ -5,8 +5,7 @@ import org.springdoclet.Configuration
 class StylesheetWriter {
 
   def writeStylesheet(Configuration config) {
-    def file = new File(config.outputDirectory, config.styleSheet)
-    file << STYLESHEET_CONTENT
+    new File(config.outputDirectory, config.styleSheet).withWriter { it.write(STYLESHEET_CONTENT) }
   }
 
   private static final STYLESHEET_CONTENT = """
