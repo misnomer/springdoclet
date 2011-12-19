@@ -33,10 +33,7 @@ class SpringRestDoclet extends Doclet {
     new ClassProcessor().process root.classes(), collectors
 
     new RestHtmlWriter().writeOutput collectors, config
-
-    if (config.isDefaultStyleSheet()) {
-      new RestStylesheetWriter().writeStylesheet config
-    }
+    new RestStylesheetWriter().writeStylesheet config
 
     return true
   }

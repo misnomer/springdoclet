@@ -39,7 +39,7 @@ public class RestPathBuilder {
 
   private void loadSchemas() {
     if (! schemaToElement) {
-      RestSchemaCollector c = collectors.find { it instanceof RestSchemaCollector }
+      RestSchemaCollector c = collectors.find { it instanceof RestSchemaCollector } as RestSchemaCollector
       schemaToElement = [:]
       for (schema in c.schemas) {
         schemaToElement[schema.className] = schema.elementName
@@ -94,7 +94,7 @@ public class RestPathBuilder {
     def navBuilder = new MarkupBuilder(sw)
 
     navBuilder.div {
-      h4 'Summary'
+      h4('class': 'top', 'Summary')
       ul {
         li {
           a(href: pathToBase(current) + config.outputFileName, "Overview")
@@ -123,22 +123,45 @@ public class RestPathBuilder {
       builder.html {
         head {
           title titleString ?: config.title
+          link(rel: 'stylesheet', type: 'text/css', href: "${pathToBase(file)}bootstrap.css")
           link(rel: 'stylesheet', type: 'text/css', href: "${pathToBase(file)}${config.styleSheet}")
         }
         body {
-          div(id: 'mainWrapper') {
-            div(id: 'leftNav') {
-              mkp.yieldUnescaped leftNav(file)
+          div('class':"topbar") {
+            div('class': "topbar-inner") {
+              div('class':"container-fluid") {
+                a('class':"brand", href:"${pathToBase(file)}${config.outputFileName}", config.title)
+                ul('class':"nav") {
+                  mkp.yield ''
+                }
+                p('class':"pull-right", style: 'color: white') {
+                  mkp.yieldUnescaped config.rightHeader
+                }
+              }
             }
-            div(id: 'mainContent') {
+          }
+
+          div('class': 'container-fluid') {
+            div('class': 'sidebar') {
+              div('class': 'well') {
+                mkp.yieldUnescaped leftNav(file)
+              }
+            }
+
+            div('class': 'content') {
               h1 titleString ?: config.title
               closure.call(builder)
+
             }
-            div(id: 'mainFooterPush', '')
+            div('class': 'footer-push', ' ')
           }
-          div(id: 'mainFooter') {
+        }
+
+        div('class': 'footer') {
+          div('class': 'footer-right') {
             mkp.yieldUnescaped config.footer
           }
+          div(style: 'clear:both;', ' ')
         }
       }
     }

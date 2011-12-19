@@ -149,7 +149,7 @@ class RestControllerCollector implements RestCollector {
   void writeOutput(MarkupBuilder builder, RestPathBuilder paths, Configuration config) {
     builder.div(id: 'controllers') {
       h2 'Controllers'
-      table(id:'controller_table') {
+      table(id:'controller_table', 'class': 'condensed-table') {
         for (ControllerMapping controller in controllers.sort { it.requestPath }) {
           tr {
             td {
@@ -168,7 +168,7 @@ class RestControllerCollector implements RestCollector {
           div('class': 'comment') { p { mkp.yieldUnescaped(controller.comment ?: '') } }
           div(id: 'action_summary') {
             h2 'Action Summary'
-            table(id: 'action_summary_table') {
+            table(id: 'action_summary_table', 'class': 'condensed-table') {
               for (ActionMapping action in controller.actions) {
                 writeActionSummary(controller, action, localBuilder)
               }
@@ -187,8 +187,8 @@ class RestControllerCollector implements RestCollector {
       td {
         a(href: "#${action.methodName}", action.methodName)
       }
-      td { code action.httpMethod }
-      td { code "${controller.requestPath}${action.requestPath}" }
+      td('class': 'code', action.httpMethod)
+      td('class': 'code', "${controller.requestPath}${action.requestPath}")
       td { mkp.yieldUnescaped(action.summary ?: ' ') }
     }
   }
@@ -199,22 +199,22 @@ class RestControllerCollector implements RestCollector {
     
     builder.div(id: "action_${action.methodName}") {
       a(name: action.methodName) {
-        h3 action.methodName
+        h2 action.methodName
       }
       div('class': 'comment') { p { mkp.yieldUnescaped(action.comment ?: '') } }
 
-      table('class': 'detailTable') {
+      table('class': 'detail-table') {
         tr {
-          td('class': 'label', 'Path')
-          td { code "${controller.requestPath}${action.requestPath}" }
+          td('class': 'name', 'Path')
+          td('class': 'code', "${controller.requestPath}${action.requestPath}")
         }
         tr {
-          td('class': 'label', 'Method')
-          td { code action.httpMethod }
+          td('class': 'name', 'Method')
+          td('class': 'code', action.httpMethod)
         }
         if (action.requestBodyClassName) {
           tr {
-            td('class': 'label', 'Request Body')
+            td('class': 'name', 'Request Body')
             td {
               paths.writeSchemaLink(action.requestBodyClassName, builder, current)
             }
@@ -222,7 +222,7 @@ class RestControllerCollector implements RestCollector {
         }
         if (action.responseBodyClassName) {
           tr {
-            td('class': 'label', 'Response Body')
+            td('class': 'name', 'Response Body')
             td {
              paths.writeSchemaLink(action.responseBodyClassName, builder, current)
             }
@@ -232,11 +232,11 @@ class RestControllerCollector implements RestCollector {
 
       if (action.pathVariables) {
         h4 'Path Variables'
-        table('class': 'detailTable') {
+        table('class': 'condensed-table') {
           for (RequestParameterMapping r in action.pathVariables) {
             tr {
-              td('class': 'label', r.name)
-              td { code r.type  }
+              td('class': 'name', r.name)
+              td('class': 'code', r.type)
               td(r.required ? "Required" : "Optional")
               td(r.defaultValue ? "Default: ${r.defaultValue}" : "")
               td('class': 'comment') { mkp.yieldUnescaped(r.comment ?: '') }
@@ -247,11 +247,11 @@ class RestControllerCollector implements RestCollector {
 
       if (action.requestParameters) {
         h4 'Request Parameters'
-        table('class': 'detailTable') {
+        table('class': 'condensed-table') {
           for (RequestParameterMapping r in action.requestParameters) {
             tr {
-              td('class': 'label', r.name)
-              td { code r.type  }
+              td('class': 'name', r.name)
+              td('class': 'code', r.type)
               td(r.required ? "Required" : "Optional")
               td(r.defaultValue ? "Default: ${r.defaultValue}" : "")
               td('class': 'comment') { mkp.yieldUnescaped(r.comment ?: '') }
@@ -265,26 +265,6 @@ class RestControllerCollector implements RestCollector {
           mkp.yieldUnescaped action.externalDocs
         }
       }
-/*
-      div {
-        h4 'Example Request'
-        div('class': 'example',
-                '''<request>
-some stuff here
-</request>
-''')
-      }
-
-      div {
-        h4 'Example Response'
-        div('class': 'example',
-                '''GET /foo
-<response>
-some stuff here
-</response>
-''')
-      }
-*/
     }
   }
 

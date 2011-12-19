@@ -162,7 +162,7 @@ public class RestSchemaCollector implements RestCollector {
   void writeOutput(MarkupBuilder builder, RestPathBuilder paths, Configuration config) {
     builder.div(id: 'schemas') {
       h2 'Schema'
-      table(id:'schema_table') {
+      table(id:'schema_table', 'class': 'condensed-table') {
         for (SchemaMapping schema in schemas.sort { it.elementName }) {
           tr {
             td {
@@ -184,7 +184,7 @@ public class RestSchemaCollector implements RestCollector {
           if (schema.enums) {
             div(id: 'enum_value_summary') {
               h2 "Enum Values"
-              table(id: 'enum_value_table') {
+              table(id: 'enum_value_table', 'class': 'condensed-table') {
                 for (e in schema.enums) {
                   tr {
                     td e.name
@@ -196,7 +196,7 @@ public class RestSchemaCollector implements RestCollector {
           } else {
             div(id: 'property_summary') {
               h2 "Property Summary"
-              table(id: 'property_summary_table') {
+              table(id: 'property_summary_table', 'class': 'condensed-table') {
                 for (property in schema.properties) {
                   writePropertySummary(property, paths, localBuilder, file)
                 }
@@ -233,21 +233,21 @@ public class RestSchemaCollector implements RestCollector {
         h3 property.name
       }
       div('class': 'comment') { p { mkp.yieldUnescaped(property.comment ?: '') } }
-      table('class': 'detailTable') {
+      table('class': 'detail-table') {
         tr {
-          td('class': 'label', 'Type')
+          td('class': 'name', 'Type')
           td { paths.writeSchemaLink(property.type, builder, current) }
         }
         tr {
-          td('class': 'label', 'Structure')
+          td('class': 'name', 'Structure')
           td(property.attribute ? "Attribute" : "Element")
         }
         tr {
-          td('class': 'label', 'Required')
+          td('class': 'name', 'Required')
           td(property.required ? "Yes" : "No")
         }
         tr {
-          td('class': 'label', 'Repeated')
+          td('class': 'name', 'Repeated')
           td(property.repeated ? "Yes" : "No")
         }
       }

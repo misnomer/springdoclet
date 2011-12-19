@@ -1,0 +1,133 @@
+body {
+  padding-top:60px;
+  height: 100%;
+}
+
+
+.container-fluid>.sidebar{
+    width: 300px;
+}
+.container-fluid>.content{
+    margin-left: 320px;
+}
+
+.container-fluid {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -78px;
+}
+
+.footer-push {
+  height: 88px;
+}
+
+.footer {
+    font-size: 11px;
+    width:100%;
+    color: #999;
+    height: 18px;
+    line-height: 18px;
+    vertical-align:bottom;
+}
+
+.footer-left {
+    float:right;
+    text-align:right;
+    padding-right: 10px;
+}
+
+.footer-right {
+    float:right;
+    text-align:right;
+    padding-right: 10px;
+}
+
+
+h1 {
+  color: #007c00;
+  text-align: center;
+}
+
+h2 {
+  color: #007c00;
+  padding-top:2em;
+}
+
+h3 {
+  color: #007c00;
+  padding-top:2em;
+}
+
+h4 {
+  padding-top: 1.5em;
+}
+
+a {
+  color: #006600;
+}
+
+tt {
+  font-family: monospace;
+}
+
+li {
+  color: inherit;
+}
+
+table {
+  width: inherit;
+  border-collapse: separate;
+  border-spacing: 2px;
+}
+
+table td {
+  border-top: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.top {
+  padding-top: 0
+}
+
+div.exampleHeader {
+    margin-top: 1.5em;
+    font-style: italic;
+}
+
+pre.scrolling {
+  height: 200px;
+  overflow:auto;
+}
+
+table.detail-table td, table.condensed-table td {
+  padding: 5px 10px 4px 10px;
+}
+
+td.code {
+  font-family: monospace;
+}
+
+td.name, table.detail-table td.name, table.condensed-table td.name {
+    text-align: right;
+    padding-left:15px;
+}
+
+
+.topbar-inner,.topbar .fill{
+  /* base color: #003300 */
+  /* lighter gradient: #004D00 */
+
+  background-color:#003300;
+  background-repeat:repeat-x;
+  background-image:-khtml-gradient(linear, left top, left bottom, from(#004D00), to(#003300));
+  background-image:-moz-linear-gradient(top, #004D00, #003300);
+  background-image:-ms-linear-gradient(top, #004D00, #003300);
+  background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #004D00), color-stop(100%, #003300));
+  background-image:-webkit-linear-gradient(top, #004D00, #003300);
+  background-image:-o-linear-gradient(top, #004D00, #003300);
+  background-image:linear-gradient(top, #004D00, #003300);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#004D00', endColorstr='#003300', GradientType=0);
+  -webkit-box-shadow:0 1px 3px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow:0 1px 3px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  box-shadow:0 1px 3px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);}
