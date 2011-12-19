@@ -17,6 +17,15 @@ class Annotations {
     }
   }
 
+  static String getValue(AnnotationDesc annotation, String elementName) {
+    for (pair in annotation.elementValues()) {
+      if (pair.element().name() == elementName) {
+        return pair.value().toString()
+      }
+    }
+    return null
+  }
+
   private static void reportError(annotation) {
     ErrorReporter.printWarning "Unable to resolve annotation type '$annotation'; " +
             "to fix this problem, add the class that implements the annotation type to the javadoc classpath"

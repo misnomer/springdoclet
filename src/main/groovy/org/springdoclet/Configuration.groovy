@@ -7,6 +7,7 @@ class Configuration {
   private static final String OPTION_LINKPATH = '-linkpath'
   private static final String OPTION_FOOTER = '-footer'
   private static final String OPTION_TITLE = '-title'
+  private static final String OPTION_OVERVIEW_DIRECTORY = "-overview-directory"
   private static final String DEFAULT_DIRECTORY = '.'
   private static final String DEFAULT_FILENAME = './spring-summary.html'
   private static final String DEFAULT_STYLESHEET = './spring-summary.css'
@@ -44,6 +45,10 @@ class Configuration {
     getOption(OPTION_TITLE) ?: DEFAULT_TITLE
   }
 
+  def getOverviewDirectory() {
+    getOption(OPTION_OVERVIEW_DIRECTORY) 
+  }
+
   private String getOption(String optionName) {
     for (option in options) {
       if (option[0] == optionName) {
@@ -65,6 +70,8 @@ class Configuration {
     } else if (option.equals(OPTION_FOOTER)) {
       return 2;
     } else if (option.equals(OPTION_TITLE)) {
+      return 2;
+    } else if (option.equals(OPTION_OVERVIEW_DIRECTORY)) {
       return 2;
     }
     return 0
