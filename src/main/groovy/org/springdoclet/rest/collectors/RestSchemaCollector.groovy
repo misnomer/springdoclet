@@ -16,6 +16,7 @@ import org.springdoclet.rest.RestCollector
 import org.springdoclet.rest.RestPathBuilder
 import org.springdoclet.TextUtils
 import org.springdoclet.rest.ParameterizedTypes
+import javax.xml.bind.annotation.XmlElementWrapper
 
 /**
  * 
@@ -28,6 +29,7 @@ public class RestSchemaCollector implements RestCollector {
   private XML_TYPE = XmlType.class.name
   private XML_ROOT_TYPE = XmlRootElement.class.name
   private XML_ELEMENT_TYPE = XmlElement.class.name
+  private XML_WRAPPED_ELEMENT_TYPE = XmlElementWrapper.class.name
   private XML_ATTRIBUTE_TYPE = XmlAttribute.class.name
 
   List<SchemaMapping> schemas = []
@@ -75,19 +77,28 @@ public class RestSchemaCollector implements RestCollector {
       property.name = Introspector.decapitalize(property.name)
       property.summary = TextUtils.getFirstSentence(method.commentText())
       property.comment = method.commentText()
-      AnnotationDesc xmlElement = null, xmlAttribute = null
+      AnnotationDesc xmlElement = null, xmlAttribute = null, wrappedElement = null
       for (annotation in method.annotations()) {
         String annotationType = Annotations.getTypeName(annotation)
         if (annotationType == XML_ELEMENT_TYPE) {
           xmlElement = annotation
         } else if (annotationType == XML_ATTRIBUTE_TYPE) {
           xmlAttribute = annotation
+        } else if (annotationType == XML_WRAPPED_ELEMENT_TYPE) {
+          wrappedElement = annotation
         }
       }
 
       if (xmlElement) {
         String altName = elementName(xmlElement)
-        if (altName) {
+        if (wrappedElement) {
+          property.childName = property.name
+          String wrappedName = wrappedElement ? elementName(wrappedElement) : null
+          if (wrappedName)
+              property.name = wrappedName
+          if (altName)
+            property.childName = altName
+        } else if (altName) {
           property.name = altName
         }
         property.required = Annotations.getValue(xmlElement, "required") == 'true'
@@ -248,12 +259,14 @@ public class RestSchemaCollector implements RestCollector {
         }
         tr {
           td('class': 'name', 'Repeated')
-          td(property.repeated ? "Yes" : "No")
+          td {
+              span(property.repeated ? "Yes" : "No")
+              span(property.childName ? "(${property.childName})" : '')
+          }
         }
       }
     }
   }
-
 }
 
 class SchemaMapping {
@@ -273,6 +286,7 @@ class SchemaProperty {
   boolean required
   boolean attribute
   boolean repeated
+  String childName
   String summary
   String comment
 }
