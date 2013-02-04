@@ -64,7 +64,16 @@ public class RestSchemaCollector implements RestCollector {
 
 
   void processProperties(ClassDoc classDoc, SchemaMapping schema) {
-    for (MethodDoc method in classDoc.methods(true)) {
+    // handle superclasses as well
+    List<MethodDoc> methods = []
+    for (ClassDoc cd = classDoc; cd != null && cd.qualifiedName() != 'java.lang.Object'; cd = cd.superclass()) {
+        for (MethodDoc method in cd.methods(true)) {
+            println "\t[${classDoc.simpleTypeName()}] adding method ${method.name()} for ${cd.name()}"
+            methods << method
+        }
+    }
+
+    for (MethodDoc method in methods) {
       SchemaProperty property = new SchemaProperty();
       String name = method.name()
       if (name.startsWith("get")) {
