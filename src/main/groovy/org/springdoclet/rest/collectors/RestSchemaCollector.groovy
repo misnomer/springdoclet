@@ -68,7 +68,7 @@ public class RestSchemaCollector implements RestCollector {
     List<MethodDoc> methods = []
     for (ClassDoc cd = classDoc; cd != null && cd.qualifiedName() != 'java.lang.Object'; cd = cd.superclass()) {
         for (MethodDoc method in cd.methods(true)) {
-            println "\t[${classDoc.simpleTypeName()}] adding method ${method.name()} for ${cd.name()}"
+//            println "\t[${classDoc.simpleTypeName()}] adding method ${method.name()} for ${cd.name()}"
             methods << method
         }
     }
